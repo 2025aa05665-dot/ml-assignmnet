@@ -16,12 +16,12 @@ from sklearn.metrics import (
     classification_report,
 )
 
-# ---------------- PAGE CONFIG ----------------
+# PAGE CONFIG
 st.set_page_config(page_title="Cardiovascular Dashboard", layout="wide")
 
 st.title("Cardiovascular Disease Prediction Dashboard")
 
-# ---------------- SIDEBAR ----------------
+# SIDEBAR
 st.sidebar.header("Controls")
 
 model_name = st.sidebar.selectbox(
@@ -40,8 +40,8 @@ uploaded_file = st.sidebar.file_uploader(
     "Upload Test CSV (must include target column)", type=["csv"]
 )
 
-# ---------------- SAMPLE TEST DATA DOWNLOAD ----------------
-# ---------------- SAMPLE TEST DATA GENERATION ----------------
+# SAMPLE TEST DATA DOWNLOAD
+# SAMPLE TEST DATA GENERATION
 @st.cache_data
 def generate_sample_test():
     df = pd.read_csv("Cardiovascular_Disease_Dataset.csv")
@@ -65,13 +65,13 @@ st.sidebar.download_button(
     mime="text/csv",
 )
 
-# ---------------- LOAD MODEL ----------------
+#LOAD MODEL
 @st.cache_resource
 def load_model(name):
     return joblib.load(f"model_files/{name}.pkl")
 
 
-# ---------------- MAIN LOGIC ----------------
+
 if uploaded_file is not None:
 
     data = pd.read_csv(uploaded_file)
@@ -99,7 +99,7 @@ if uploaded_file is not None:
     auc = roc_auc_score(y_true, probs)
     mcc = matthews_corrcoef(y_true, preds)
 
-    # -------- COLORED METRIC CARDS --------
+    # COLORED METRIC CARDS
     metric_colors = [
         "#16a34a",  # green - accuracy
         "#2563eb",  # blue - precision
@@ -168,7 +168,7 @@ if uploaded_file is not None:
 
     st.pyplot(fig)
 
-    #----CLASSIFICATION REPORT --------#
+    #CLASSIFICATION REPORT#
     st.subheader("Classification Report")
 
     report = classification_report(y_true, preds, output_dict=True)
